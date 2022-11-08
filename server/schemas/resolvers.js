@@ -11,7 +11,7 @@ const resolvers = {
 
         return userData;
       }
-      throw new AuthenticationError('need to be logged In')
+      throw new AuthenticationError('Need to be logged in')
     },
   },
 
@@ -33,7 +33,7 @@ const resolvers = {
       const correctPassword = await user.isCorrectPassword(password);
 
       if (!correctPassword) {
-        throw new AuthenticationError("Incorrect Password");
+        throw new AuthenticationError("Incorrect password");
       }
 
       const token = sign(user);
