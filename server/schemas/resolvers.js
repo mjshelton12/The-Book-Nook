@@ -39,6 +39,16 @@ const resolvers = {
       return { token, user };
     },
   },
+  addBook: async (parent, { thoughtText, thoughtAuthor }) => {
+    const thought = await Thought.create({ thoughtText, thoughtAuthor });
+
+    await User.findOneAndUpdate(
+      { username: thoughtAuthor },
+      { $addToSet: { thoughts: thought._id } }
+    );
+
+    return thought;
+  },
 };
 
 module.exports = resolvers;
