@@ -39,15 +39,23 @@ const resolvers = {
       return { token, user };
     },
   },
-  addBook: async (parent, { thoughtText, thoughtAuthor }) => {
-    const thought = await Thought.create({ thoughtText, thoughtAuthor });
+  addBook: async (parent, args) => {
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: args.user._id },
+      { $addToSet: { savedBooks: args.BookInput } })
 
-    await User.findOneAndUpdate(
-      { username: thoughtAuthor },
-      { $addToSet: { thoughts: thought._id } }
+    return updatedUser;
+  },
+  removeBook: async (parent, args) => {
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: args.user._id },
+      { $pull: { savedBooks: { bookId: args.bookId } } },
+      { new: true }
     );
-
-    return thought;
+    if (!updatedUser) {
+      return res.status(404).json({ message: "Couldn't find user with this id!" });
+    }
+    return updatedUser;
   },
 };
 
