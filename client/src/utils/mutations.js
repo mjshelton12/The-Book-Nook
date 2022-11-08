@@ -11,3 +11,32 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const ADD_USER = gql`
+  mutation addUser($username: String!, $email: String!, $password: String!) {
+    addUser($username: String!, email: $email, password: $password) {
+      token
+      user {
+        _id
+        username
+      }
+    }
+  }
+`;
+
+export const SAVE_BOOK = gql`
+  mutation addUser($BookInput: BookInput!, $username: String!) {
+    addUser($BookInput: BookInput!, $username: String!) {
+      BookInput
+      username
+    }
+  }
+`;
+
+export const REMOVE_BOOK = gql`
+  mutation addUser($bookId: String!, $username: String!) {
+      bookId
+      username
+    }
+  }
+`;

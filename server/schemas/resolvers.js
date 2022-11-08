@@ -39,16 +39,16 @@ const resolvers = {
       return { token, user };
     },
   },
-  addBook: async (parent, args) => {
+  saveBook: async (parent, args) => {
     const updatedUser = await User.findOneAndUpdate(
-      { _id: args.user._id },
-      { $addToSet: { savedBooks: args.BookInput } })
+      { _id: args.username },
+      { $addToSet: { savedBooks: args.bookId } })
 
     return updatedUser;
   },
   removeBook: async (parent, args) => {
     const updatedUser = await User.findOneAndUpdate(
-      { _id: args.user._id },
+      { username: args.username},
       { $pull: { savedBooks: { bookId: args.bookId } } },
       { new: true }
     );
